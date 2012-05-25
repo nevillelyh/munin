@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case $1 in
+    config)
+        cat << 'EOF'
+graph_order down up
+graph_title Transmission traffic
+graph_vlabel KB/s
+graph_category transmission
+graph_scale no
+down.label down
+up.label up
+EOF
+        exit 0
+esac
+
+transmission-remote -l | grep "^Sum:" | awk '{print "down.value "$(NF)"\nup.value "$(NF-1)}'

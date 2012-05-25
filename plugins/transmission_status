@@ -1,0 +1,47 @@
+#!/bin/bash
+
+case $1 in
+    config)
+        cat << 'EOF'
+graph_order updown downloading uploading seeding idle queued stopped total
+graph_title Transmission status
+graph_vlabel Number of transmissions
+graph_category transmission
+graph_scale no
+updown.label up & down
+updown.draw AREASTACK
+downloading.label downloading
+downloading.draw AREASTACK
+uploading.label uploading
+uploading.draw AREASTACK
+seeding.label seeding
+seeding.draw AREASTACK
+idle.label idle
+idle.draw AREASTACK
+queued.label queued
+queued.draw AREASTACK
+stopped.label stopped
+stopped.draw AREASTACK
+total.label total
+total.draw LINE1
+EOF
+        exit 0
+esac
+
+updown=$(transmission-remote -l | cut -c 58-70 | egrep "\<Up & Down\>" | wc -l)
+downloading=$(transmission-remote -l | cut -c 58-70 | egrep "\<Downloading\>" | wc -l)
+uploading=$(transmission-remote -l | cut -c 58-70 | egrep "\<Uploading\>" | wc -l)
+seeding=$(transmission-remote -l | cut -c 58-70 | egrep "\<Seeding\>" | wc -l)
+idle=$(transmission-remote -l | cut -c 58-70 | egrep "\<Idle\>" | wc -l)
+queued=$(transmission-remote -l | cut -c 58-70 | egrep "\<Queued\>" | wc -l)
+stopped=$(transmission-remote -l | cut -c 58-70 | egrep "\<Stopped\>" | wc -l)
+total=$(transmission-remote -l | grep -v "^ID" | grep -v "^Sum:" | wc -l)
+
+echo "updown.value ${updown}"
+echo "downloading.value ${downloading}"
+echo "uploading.value ${uploading}"
+echo "seeding.value ${seeding}"
+echo "idle.value ${idle}"
+echo "queued.value ${queued}"
+echo "stopped.value ${stopped}"
+echo "total.value ${total}"
