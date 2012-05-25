@@ -1,4 +1,30 @@
 #!/bin/sh
+# -*- sh -*-
+
+: << =cut
+
+=head1 NAME
+
+transmission_traffic - Plugin to Transmission network traffic
+
+=head1 CONFIGURATION
+
+No configuration
+
+=head1 AUTHOR
+
+Neville Li (neville.lyh@gmail.com)
+
+=head1 LICENSE
+
+Unknown license
+
+=head1 MAGIC MARKERS
+
+ #%# family=auto
+ #%# capabilities=autoconf
+
+=cut
 
 case $1 in
     config)
